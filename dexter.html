@@ -1,178 +1,1349 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="si">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matchmaking App</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f1f1f1;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ACD MD Team - Free WhatsApp Mini Bot Service. Professional bot solutions for WhatsApp automation and messaging." />
+  <meta name="keywords" content="WhatsApp bot, mini bot service, ACD MD, automation, messaging" />
+  <meta name="theme-color" content="#e50914" />
+  
+  <title>ACD MD Team — Free WhatsApp Bot Service</title>
+  
+  <!-- Preload critical resources -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap"></noscript>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <style>
+    :root {
+      --bg: #0a0a0c;
+      --bg-subtle: #0f0f12;
+      --panel: #141418;
+      --panel-hover: #1a1a20;
+      --panel-2: #1f1f25;
+      --text: #f8fafc;
+      --text-muted: #cbd5e1;
+      --text-subtle: #94a3b8;
+      --brand: #dc2626;
+      --brand-hover: #ef4444;
+      --brand-light: #fca5a5;
+      --accent: #3b82f6;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --border: rgba(255, 255, 255, 0.1);
+      --border-hover: rgba(255, 255, 255, 0.2);
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      --gradient-brand: linear-gradient(135deg, var(--brand) 0%, var(--brand-hover) 100%);
+      --gradient-text: linear-gradient(135deg, var(--text) 0%, var(--brand-light) 100%);
+      --backdrop-blur: saturate(180%) blur(20px);
+    }
 
-        .container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            width: 350px;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        h2 {
-            text-align: center;
-        }
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
 
-        label {
-            display: block;
-            margin: 10px 0 5px;
-        }
+    body {
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6;
+      color: var(--text);
+      background: 
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(220, 38, 38, 0.15), transparent),
+        radial-gradient(ellipse 60% 80% at 80% 120%, rgba(59, 130, 246, 0.1), transparent),
+        var(--bg);
+      min-height: 100vh;
+      overflow-x: hidden;
+      font-feature-settings: 'kern' 1, 'liga' 1;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
-        input[type="text"], input[type="number"], select {
-            width: 100%;
-            padding: 8px;
-            margin: 5px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
+    /* Enhanced Navigation */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      backdrop-filter: var(--backdrop-blur);
+      background: linear-gradient(
+        to bottom,
+        rgba(10, 10, 12, 0.95) 0%,
+        rgba(10, 10, 12, 0.8) 100%
+      );
+      border-bottom: 1px solid var(--border);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+    .nav.scrolled {
+      background: linear-gradient(
+        to bottom,
+        rgba(10, 10, 12, 0.98) 0%,
+        rgba(10, 10, 12, 0.95) 100%
+      );
+      border-bottom-color: var(--border-hover);
+      box-shadow: var(--shadow-lg);
+    }
 
-        button:hover {
-            background-color: #45a049;
-        }
+    .nav-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: padding 0.3s ease;
+    }
 
-        #result {
-            margin-top: 15px;
-            text-align: center;
-            font-weight: bold;
-        }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: white;
+      transition: transform 0.3s ease;
+    }
 
-        .section {
-            margin-bottom: 20px;
-        }
+    .brand:hover {
+      transform: translateY(-1px);
+    }
 
-        .partner-info {
-            margin-top: 20px;
-        }
+    .brand-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--gradient-brand);
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 
+        0 8px 32px rgba(220, 38, 38, 0.3),
+        0 0 0 1px var(--border);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-        .section label {
-            font-weight: bold;
-        }
-    </style>
+    .brand-logo::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      background: conic-gradient(from 0deg, var(--brand), var(--brand-hover), var(--brand));
+      border-radius: 14px;
+      z-index: -1;
+      animation: rotate 3s linear infinite;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .brand:hover .brand-logo::before {
+      opacity: 1;
+    }
+
+    .brand:hover .brand-logo {
+      transform: scale(1.05);
+      box-shadow: 
+        0 12px 48px rgba(220, 38, 38, 0.4),
+        0 0 0 1px var(--border-hover);
+    }
+
+    .brand-logo span {
+      font-family: "Orbitron", monospace;
+      font-weight: 900;
+      font-size: 18px;
+      letter-spacing: 2px;
+      background: var(--gradient-text);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.125rem;
+    }
+
+    .brand-title {
+      font-family: "Orbitron", sans-serif;
+      font-weight: 800;
+      font-size: 1.125rem;
+      letter-spacing: 0.5px;
+      background: var(--gradient-text);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-subtitle {
+      font-size: 0.75rem;
+      color: var(--text-subtle);
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+
+    /* Mobile Menu */
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger:hover {
+      background: var(--panel-hover);
+      color: var(--brand);
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100vh;
+      background: var(--panel);
+      border-left: 1px solid var(--border);
+      backdrop-filter: var(--backdrop-blur);
+      transition: right 0.3s ease;
+      z-index: 1001;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .sidebar.open {
+      right: 0;
+    }
+
+    .sidebar-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .sidebar-close {
+      align-self: flex-end;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-close:hover {
+      background: var(--panel-hover);
+      color: var(--brand);
+    }
+
+    .sidebar a {
+      padding: 1rem;
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 500;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .sidebar a:hover {
+      background: var(--panel-hover);
+      color: var(--text);
+      transform: translateX(4px);
+    }
+
+    /* Navigation Menu */
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .nav-link {
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 0.875rem;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--gradient-brand);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    /* Enhanced Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      white-space: nowrap;
+      background: none;
+    }
+
+    .btn-primary {
+      background: var(--gradient-brand);
+      color: white;
+      box-shadow: 
+        0 4px 12px rgba(220, 38, 38, 0.3),
+        0 0 0 1px var(--border);
+      font-size: 1rem;
+      padding: 1rem 2rem;
+      border-radius: 16px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .btn-primary:hover::before {
+      opacity: 1;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 
+        0 8px 24px rgba(220, 38, 38, 0.4),
+        0 0 0 1px var(--border-hover);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    .btn-secondary {
+      background: var(--panel);
+      color: var(--text);
+      border-color: var(--border);
+      backdrop-filter: var(--backdrop-blur);
+    }
+
+    .btn-secondary:hover {
+      background: var(--panel-hover);
+      border-color: var(--border-hover);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
+    }
+
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-muted);
+      border-color: var(--border);
+      backdrop-filter: var(--backdrop-blur);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text);
+      border-color: var(--border-hover);
+      transform: translateY(-1px);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 8rem 1.5rem 4rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-content {
+      display: grid;
+      grid-template-columns: 1fr 0.8fr;
+      gap: 3rem;
+      align-items: center;
+      min-height: 60vh;
+    }
+
+    .hero-text {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: rgba(220, 38, 38, 0.1);
+      border: 1px solid rgba(220, 38, 38, 0.3);
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--brand-light);
+      width: fit-content;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      background: var(--gradient-text);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+    }
+
+    .hero-description {
+      font-size: 1.125rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 500px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .hero-visual {
+      position: relative;
+    }
+
+    .hero-image {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.25),
+        0 0 0 1px var(--border);
+      transition: all 0.3s ease;
+    }
+
+    .hero-image:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 
+        0 35px 70px -12px rgba(0, 0, 0, 0.35),
+        0 0 0 1px var(--border-hover);
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .hero-image::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent, rgba(220, 38, 38, 0.1));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .hero-image:hover::before {
+      opacity: 1;
+    }
+
+    /* Section Styling */
+    .section {
+      padding: 4rem 1.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      font-family: "Orbitron", sans-serif;
+      font-size: clamp(2rem, 4vw, 2.5rem);
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+      background: var(--gradient-text);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section-description {
+      font-size: 1.125rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* Features Section */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .feature-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--gradient-brand);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      background: var(--panel-hover);
+      border-color: var(--border-hover);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
+      background: var(--gradient-brand);
+      display: grid;
+      place-items: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    .feature-card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: var(--text);
+    }
+
+    .feature-card p {
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Team Grid */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .member-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 1.5rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .member-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--gradient-brand);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .member-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .member-card:hover {
+      transform: translateY(-4px);
+      background: var(--panel-hover);
+      border-color: var(--border-hover);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .member-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .member-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 2px solid var(--border);
+      box-shadow: var(--shadow);
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .member-avatar::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      background: var(--gradient-brand);
+      border-radius: 22px;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .member-card:hover .member-avatar::before {
+      opacity: 1;
+    }
+
+    .member-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .member-card:hover .member-avatar img {
+      transform: scale(1.1);
+    }
+
+    .member-details h3 {
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: 0.3px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .member-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 8px;
+      background: var(--gradient-brand);
+      color: white;
+      font-family: "Orbitron", monospace;
+      font-size: 0.75rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .member-role {
+      color: var(--text-subtle);
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    /* Contact Section */
+    .contact-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--bg-subtle);
+      border-top: 1px solid var(--border);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      margin-top: 4rem;
+    }
+
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      color: var(--text-subtle);
+      font-size: 0.875rem;
+      line-height: 1.6;
+    }
+
+    /* Notification Styles */
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      box-shadow: var(--shadow-xl);
+      backdrop-filter: var(--backdrop-blur);
+      z-index: 1002;
+      transform: translateX(400px);
+      transition: transform 0.3s ease;
+      max-width: 300px;
+    }
+
+    .notification.show {
+      transform: translateX(0);
+    }
+
+    .notification.success {
+      border-color: var(--success);
+      background: rgba(16, 185, 129, 0.1);
+    }
+
+    .notification.error {
+      border-color: var(--brand);
+      background: rgba(220, 38, 38, 0.1);
+    }
+
+    /* Animations */
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in-up {
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+
+    /* Loading States */
+    .loading {
+      opacity: 0.7;
+      pointer-events: none;
+      position: relative;
+    }
+
+    .loading::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      animation: shimmer 1.5s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .hero-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+      }
+
+      .nav-inner {
+        padding: 0.75rem 1rem;
+      }
+
+      .brand-logo {
+        width: 40px;
+        height: 40px;
+      }
+
+      .brand-logo span {
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+      }
+
+      .hamburger {
+        display: block;
+      }
+
+      .hero {
+        padding: 6rem 1rem 3rem;
+      }
+
+      .hero-actions {
+        justify-content: center;
+      }
+
+      .btn-primary {
+        padding: 0.875rem 1.5rem;
+        font-size: 0.875rem;
+      }
+
+      .team-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .member-card {
+        padding: 1.25rem;
+      }
+
+      .section {
+        padding: 3rem 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .brand-text {
+        display: none;
+      }
+
+      .hero-title {
+        font-size: 2rem;
+      }
+
+      .hero-description {
+        font-size: 1rem;
+      }
+
+      .member-info {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+      }
+
+      .member-avatar {
+        width: 100px;
+        height: 100px;
+      }
+    }
+
+    /* Utility Classes */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .focus-visible:focus-visible {
+      outline: 2px solid var(--brand);
+      outline-offset: 2px;
+    }
+  </style>
 </head>
 <body>
-
-    <div class="container">
-        <h2>Matchmaking App</h2>
-
-        <!-- Your Information -->
-        <div class="section">
-            <h3>Your Information</h3>
-            <label for="name1">Name:</label>
-            <input type="text" id="name1" placeholder="Enter your name">
-
-            <label for="age1">Age:</label>
-            <input type="number" id="age1" placeholder="Enter your age">
-
-            <label for="country1">Country:</label>
-            <select id="country1">
-                <option value="USA">USA</option>
-                <option value="UK">UK</option>
-                <option value="Canada">Canada</option>
-                <option value="India">India</option>
-                <option value="Australia">Australia</option>
-            </select>
+  <!-- Navigation -->
+  <nav class="nav" id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a class="brand focus-visible" href="#home" aria-label="ACD MD Team - Home">
+        <div class="brand-text">
+          <div class="brand-title">acd md team</div>
+          <div class="brand-subtitle">WhatsApp Bot Service</div>
         </div>
-
-        <!-- Partner's Information -->
-        <div class="partner-info">
-            <h3>Partner's Information</h3>
-            <label for="name2">Name:</label>
-            <input type="text" id="name2" placeholder="Enter partner's name">
-
-            <label for="age2">Age:</label>
-            <input type="number" id="age2" placeholder="Enter partner's age">
-
-            <label for="country2">Country:</label>
-            <select id="country2">
-                <option value="USA">USA</option>
-                <option value="UK">UK</option>
-                <option value="Canada">Canada</option>
-                <option value="India">India</option>
-                <option value="Australia">Australia</option>
-            </select>
+        <div class="brand-logo" aria-hidden="true">
+          <span>acd</span>
         </div>
+      </a>
+      
+      <button class="hamburger" onclick="toggleSidebar()" aria-label="Open menu">
+        <i class="fas fa-bars"></i>
+      </button>
 
-        <!-- Match Button -->
-        <button onclick="generateMatch()">Generate Match</button>
-
-        <!-- Match Result -->
-        <div id="result"></div>
+      <div class="nav-menu">
+        <a href="#home" class="nav-link focus-visible active">Home</a>
+        <a href="#features" class="nav-link focus-visible">Features</a>
+        <a href="#team" class="nav-link focus-visible">Team</a>
+        <a href="#contact" class="nav-link focus-visible">Contact</a>
+      </div>
     </div>
+  </nav>
 
-    <script>
-        function generateMatch() {
-    // Get the input values for user and partner
-    const name1 = document.getElementById("name1").value;
-    const age1 = parseInt(document.getElementById("age1").value);
-    const country1 = document.getElementById("country1").value;
+  <!-- Mobile Sidebar -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+  <div class="sidebar" id="sidebar">
+    <button class="sidebar-close" onclick="closeSidebar()" aria-label="Close menu">
+      <i class="fas fa-times"></i>
+    </button>
+    <a href="#home" onclick="closeSidebar()">
+      <i class="fas fa-home"></i>
+      Home
+    </a>
+    <a href="#features" onclick="closeSidebar()">
+      <i class="fas fa-star"></i>
+      Features
+    </a>
+    <a href="#team" onclick="closeSidebar()">
+      <i class="fas fa-users"></i>
+      Team
+    </a>
+    <a href="#contact" onclick="closeSidebar()">
+      <i class="fas fa-envelope"></i>
+      Contact
+    </a>
+  </div>
 
-    const name2 = document.getElementById("name2").value;
-    const age2 = parseInt(document.getElementById("age2").value);
-    const country2 = document.getElementById("country2").value;
+  <!-- Hero Section -->
+  <main>
+    <section class="hero" id="home" aria-labelledby="hero-title">
+      <div class="hero-content">
+        <div class="hero-text">
+          <div class="hero-kicker fade-in-up">
+            <i class="fas fa-robot" aria-hidden="true"></i>
+            Free Bot Service
+          </div>
+          
+          <h1 id="hero-title" class="hero-title fade-in-up">
+            Advanced WhatsApp Bot Solutions
+          </h1>
+          
+          <p class="hero-description fade-in-up">
+            Experience next-generation WhatsApp automation with ACD MD Team. 
+            Our professional bot service delivers powerful features, 24/7 reliability, 
+            and seamless integration for your messaging needs.
+          </p>
+          
+          <div class="hero-actions fade-in-up">
+            <button class="btn btn-primary focus-visible" id="pairBtn1" aria-describedby="pair-desc">
+              <i class="fas fa-link" aria-hidden="true"></i>
+               Bot Pair #1
+            </button>
+            <button class="btn btn-primary focus-visible" id="pairBtn2" aria-describedby="pair-desc">
+              <i class="fas fa-link" aria-hidden="true"></i>
+              Bot Pair #2
+            </button>
+            <div id="pair-desc" class="sr-only">Connect to our WhatsApp bot service</div>
+          </div>
+        </div>
+        
+        <div class="hero-visual fade-in-up">
+          <div class="hero-image">
+            <img src="https://files.catbox.moe/hx7cw0.jpg" alt="ACD MD Bot Interface Preview" loading="eager" width="500" height="300" />
+          </div>
+        </div>
+      </div>
+    </section>
 
-    // Validate inputs
-    if (!name1 || !name2 || isNaN(age1) || isNaN(age2)) {
-        document.getElementById("result").innerHTML = "Please fill out all fields.";
-        return;
+    <!-- Features Section -->
+    <section class="section" id="features" aria-labelledby="features-title">
+      <div class="section-header">
+        <h2 id="features-title" class="section-title">Powerful Features</h2>
+        <p class="section-description">
+          Discover what makes our WhatsApp bot service stand out from the rest
+        </p>
+      </div>
+      
+      <div class="features-grid">
+        <div class="feature-card fade-in-up">
+          <div class="feature-icon">
+            <i class="fas fa-lightning-bolt"></i>
+          </div>
+          <h3>Lightning Fast</h3>
+          <p>Experience instant responses and rapid command execution with our optimized bot infrastructure.</p>
+        </div>
+        
+        <div class="feature-card fade-in-up">
+          <div class="feature-icon">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h3>Secure & Reliable</h3>
+          <p>Your data is protected with enterprise-grade security and 99.9% uptime guarantee.</p>
+        </div>
+        
+        <div class="feature-card fade-in-up">
+          <div class="feature-icon">
+            <i class="fas fa-cogs"></i>
+          </div>
+          <h3>Easy Setup</h3>
+          <p>Get started in minutes with our simple pairing process. No technical knowledge required.</p>
+        </div>
+        
+        <div class="feature-card fade-in-up">
+          <div class="feature-icon">
+            <i class="fas fa-headset"></i>
+          </div>
+          <h3>24/7 Support</h3>
+          <p>Our dedicated team is always available to help you with any questions or issues.</p>
+        </div>
+        
+        <div class="feature-card fade-in-up">
+          <div class="feature-icon">
+            <i class="fas fa-download"></i>
+          </div>
+          <h3>Media Downloads</h3>
+          <p>Download videos, music, and images directly through WhatsApp commands.</p>
+        </div>
+        
+        <div class="feature-card fade-in-up">
+          <div class="feature-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <h3>Group Management</h3>
+          <p>Advanced group moderation tools to keep your WhatsApp groups organized and active.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="section" id="team" aria-labelledby="team-title">
+      <div class="section-header">
+        <h2 id="team-title" class="section-title">Meet Our Expert Team</h2>
+        <p class="section-description">
+          Passionate developers dedicated to creating exceptional WhatsApp bot experiences
+        </p>
+      </div>
+      
+      <div class="team-grid">
+        <article class="member-card fade-in-up">
+          <div class="member-info">
+            <div class="member-avatar">
+              <img src="https://files.catbox.moe/j958pu.jpg" alt="ASHU - Lead Developer" loading="lazy" width="80" height="80" />
+            </div>
+            <div class="member-details">
+              <h3>
+                ASHU
+                <span class="member-badge" aria-label="Team member A">A</span>
+              </h3>
+              <p class="member-role">Lead Developer & Architect</p>
+            </div>
+          </div>
+        </article>
+        
+        <article class="member-card fade-in-up">
+          <div class="member-info">
+            <div class="member-avatar">
+              <img src="https://files.catbox.moe/8ox1n8.jpg" alt="CHUTTA - Design & Development Specialist" loading="lazy" width="80" height="80" />
+            </div>
+            <div class="member-details">
+              <h3>
+                CHUTTA
+                <span class="member-badge" aria-label="Team member C">C</span>
+              </h3>
+              <p class="member-role">Design & Development Specialist</p>
+            </div>
+          </div>
+        </article>
+        
+        <article class="member-card fade-in-up">
+          <div class="member-info">
+            <div class="member-avatar">
+              <img src="https://files.catbox.moe/kf47vr.jpg" alt="DINA - UI/UX Designer & Developer" loading="lazy" width="80" height="80" />
+            </div>
+            <div class="member-details">
+              <h3>
+                DINA
+                <span class="member-badge" aria-label="Team member D">D</span>
+              </h3>
+              <p class="member-role">UI/UX Designer & Developer</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section" id="contact" aria-labelledby="contact-title">
+      <div class="section-header">
+        <h2 id="contact-title" class="section-title">Get Connected</h2>
+        <p class="section-description">
+          Ready to enhance your WhatsApp experience? Reach out through any of these channels
+        </p>
+      </div>
+      
+      <div class="contact-grid">
+        <a href="https://whatsapp.com/channel/0029VbAb56wFcow9VF8VdX3S" class="btn btn-ghost focus-visible" target="_blank" rel="noopener noreferrer" aria-label="Contact us on WhatsApp">
+          <i class="fab fa-whatsapp" aria-hidden="true"></i>
+          WhatsApp
+        </a>
+        <a href="https://t.me/+7uGw70Nb98xjNzc1" class="btn btn-ghost focus-visible" target="_blank" rel="noopener noreferrer" aria-label="Join our Telegram channel">
+          <i class="fab fa-telegram" aria-hidden="true"></i>
+          Telegram
+        </a>
+        <a href="https://youtube.com/@darktechzone?si=HkSclx6CfPoP-7EY" class="btn btn-ghost focus-visible" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to our YouTube channel">
+          <i class="fab fa-youtube" aria-hidden="true"></i>
+          YouTube
+        </a>
+       
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2024 ACD MD Team. All rights reserved.</p>
+      <p>Providing free WhatsApp bot services with passion and dedication.</p>
+    </div>
+  </footer>
+
+  <!-- Notification -->
+  <div class="notification" id="notification">
+    <div id="notificationText"></div>
+  </div>
+
+  <script>
+    // Navigation scroll effect
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Mobile sidebar functionality
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('sidebarOverlay');
+      
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('show');
     }
 
-    // Simple matching logic
-    let matchPercentage = 0;
-
-    // Match logic based on age difference
-    let ageDifference = Math.abs(age1 - age2);
-    if (ageDifference <= 5) {
-        matchPercentage += 30;
-    } else if (ageDifference <= 10) {
-        matchPercentage += 20;
-    } else {
-        matchPercentage += 10;
+    function closeSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('sidebarOverlay');
+      
+      sidebar.classList.remove('open');
+      overlay.classList.remove('show');
     }
 
-    // Match logic based on country
-    if (country1 === country2) {
-        matchPercentage += 40;
-    } else {
-        matchPercentage += 20;
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Active navigation link highlighting
+    function updateActiveNavLink() {
+      const sections = document.querySelectorAll('section[id]');
+      const navLinks = document.querySelectorAll('.nav-link');
+      
+      let currentSection = '';
+      
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        const sectionHeight = section.offsetHeight;
+        
+        if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+          currentSection = section.getAttribute('id');
+        }
+      });
+      
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${currentSection}`) {
+          link.classList.add('active');
+        }
+      });
     }
 
-    // Random factor for personality match
-    matchPercentage += Math.floor(Math.random() * 30) + 1;
+    window.addEventListener('scroll', updateActiveNavLink);
 
-    // Ensure match percentage is between 0 and 100
-    if (matchPercentage > 100) matchPercentage = 100;
+    // Notification system
+    function showNotification(message, type = 'success') {
+      const notification = document.getElementById('notification');
+      const notificationText = document.getElementById('notificationText');
+      
+      notificationText.textContent = message;
+      notification.className = `notification ${type}`;
+      notification.classList.add('show');
+      
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 3000);
+    }
 
-    // Display the match percentage
-    document.getElementById("result").innerHTML = `${name1} and ${name2}, your match percentage is ${matchPercentage}%!`;
+    // Bot pairing functionality
+    document.getElementById('pairBtn1').addEventListener('click', function() {
+      this.classList.add('loading');
+      this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connecting...';
+      
+      setTimeout(() => {
+        // Simulate pairing process
+        window.open('https://acd-md-v2-04-b12724fae200.herokuapp.com/', '_blank');
+        this.classList.remove('loading');
+        this.innerHTML = '<i class="fas fa-link"></i> Connect Bot #1';
+        showNotification('Bot #1 pairing initiated! Check the new tab.');
+      }, 1500);
+    });
 
-    // Open the ad link in a new window
-    window.open('https://otieu.com/4/9613171', '_blank', 'width=400,height=300');
-}
-  </script>  
+    document.getElementById('pairBtn2').addEventListener('click', function() {
+      this.classList.add('loading');
+      this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connecting...';
+      
+      setTimeout(() => {
+        // Simulate pairing process
+        window.open('https://acd-md-v2-05-4c939f29dc2e.herokuapp.com/', '_blank');
+        this.classList.remove('loading');
+        this.innerHTML = '<i class="fas fa-link"></i> Connect Bot #2';
+        showNotification('Bot #2 pairing initiated! Check the new tab.');
+      }, 1500);
+    });
+
+    // Fade in animation on scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in-up');
+        }
+      });
+    }, observerOptions);
+
+    // Observe all elements with fade-in-up class
+    document.querySelectorAll('.fade-in-up').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Keyboard navigation support
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeSidebar();
+      }
+    });
+
+    // Preload critical images
+    const criticalImages = [
+      'https://files.catbox.moe/p0tgs0.jpg',
+      'https://files.catbox.moe/j958pu.jpg',
+      'https://files.catbox.moe/8ox1n8.jpg',
+      'https://files.catbox.moe/kf47vr.jpg'
+    ];
+
+    criticalImages.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+
+    // Initialize animations on page load
+    window.addEventListener('load', () => {
+      document.querySelectorAll('.fade-in-up').forEach((el, index) => {
+        setTimeout(() => {
+          el.style.opacity = '1';
+        }, index * 100);
+      });
+    });
+  </script>
 </body>
-</html>
+              </html>
+
+
+
+
